@@ -48,12 +48,16 @@ namespace mu2e {
 
     double innerRadius()  const { return data_[0]; }
     double outerRadius()  const { return data_[1]; }
+
     double zHalfLength()  const { return data_[2]; }
+    void zHalfLength(double val) { data_[2] = val; }
+
     double phi0()         const { return data_[3]; }
     double phiMax()       const { return data_[4]; }
     double phiTotal()     const { return data_[4]; }
 
     double const * data() const { return data_.data(); }
+
 
   private:
 

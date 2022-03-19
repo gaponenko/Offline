@@ -35,6 +35,7 @@
 #include "Geant4/G4UnionSolid.hh"
 
 namespace mu2e {
+  static const double vdHalfThick = 0.010*CLHEP::mm; // AG:
 
   //================================================================
 
@@ -298,6 +299,64 @@ namespace mu2e {
           windowOrigin -= CLHEP::Hep3Vector(0., 0., (2.*pse->wFramesIn()[iwindow].getTubsParams().zHalfLength()
                                                      + pse->windows()[iwindow].getTubsParams().zHalfLength()));
         }
+
+        if(true) { //AG: insert a pseudo-VD volume to record particle flux before crossing the window
+
+          windowOrigin -= CLHEP::Hep3Vector(0.,0., 2*vdHalfThick);
+
+          CLHEP::Hep3Vector pvdOrigin(windowOrigin);
+          pvdOrigin += CLHEP::Hep3Vector(0.,0., pse->windows()[iwindow].getTubsParams().zHalfLength() + vdHalfThick);
+
+          auto tub(pse->windows()[iwindow].getTubsParams());
+          tub.zHalfLength(vdHalfThick);
+
+          std::ostringstream pvdname;
+          pvdname<<"PSEnclosureWindow" << iwindow+1<<"Entrance";
+
+          nestTubs(pvdname.str(),
+                   tub,
+                   findMaterialOrThrow("PSVacuum"),
+                   nullptr,
+                   pvdOrigin,
+                   parent,
+                   0,
+                   true, //visible
+                   G4Colour::Magenta(),
+                   true, // solid
+                   forceAuxEdgeVisible,
+                   placePV,
+                   doSurfaceCheck
+                   );
+        } // AG entrance VD
+
+        const CLHEP::Hep3Vector agoffset(0,0,-2*vdHalfThick);
+        if(true) { //AG: insert a pseudo-VD volume to record particle flux after crossing the window
+
+          CLHEP::Hep3Vector pvdOrigin(windowOrigin);
+          pvdOrigin -= CLHEP::Hep3Vector(0.,0., pse->windows()[iwindow].getTubsParams().zHalfLength() + vdHalfThick);
+
+          auto tub(pse->windows()[iwindow].getTubsParams());
+          tub.zHalfLength(vdHalfThick);
+
+          std::ostringstream pvdname;
+          pvdname<<"PSEnclosureWindow" << iwindow+1<<"Exit";
+
+          nestTubs(pvdname.str(),
+                   tub,
+                   findMaterialOrThrow("PSVacuum"),
+                   nullptr,
+                   pvdOrigin,
+                   parent,
+                   0,
+                   true, //visible
+                   G4Colour::Magenta(),
+                   true, // solid
+                   forceAuxEdgeVisible,
+                   placePV,
+                   doSurfaceCheck
+                   );
+        } // AG exit VD
+
         nestTubs(windowname.str(),
                  pse->windows()[iwindow].getTubsParams(),
                  findMaterialOrThrow(pse->windows()[iwindow].materialName()),
@@ -339,7 +398,7 @@ namespace mu2e {
                    pse->wFramesOut()[iwindow].getTubsParams(),
                    findMaterialOrThrow(pse->wFramesOut()[iwindow].materialName()),
                    0,
-                   pse->wFramesOut()[iwindow].originInMu2e() - parent.centerInMu2e() + extraOffset,
+                   pse->wFramesOut()[iwindow].originInMu2e() - parent.centerInMu2e() + extraOffset + agoffset,
                    parent,
                    0,
                    PSIsVisible,
