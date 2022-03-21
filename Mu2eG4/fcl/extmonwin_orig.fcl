@@ -1,0 +1,136 @@
+# Andrei Gaponenko, 2022
+
+#include "Offline/fcl/minimalMessageService.fcl"
+#include "Offline/fcl/standardProducers.fcl"
+#include "Offline/fcl/standardServices.fcl"
+#include "Offline/Mu2eG4/fcl/prolog.fcl"
+
+BEGIN_PROLOG
+#----------------------------------------------------------------
+# Mu2eG4 cuts
+killLowEnergyStuff: { type: kineticEnergy cut: 3000. }
+#
+killInSideVolumes: {
+   type: inVolume
+   pars: [ PSShieldShell1, PbarAbsTS1In, DS3Vacuum, PSEnclosureWindow2Entrance, PSEnclosureWindow3Entrance, psWallUpper, floorN ]
+}
+#
+extmonwinwriter: {
+   type: union
+   pars: [
+      { type: intersection pars: [ {type: inVolume pars: ["PSEnclosureWindow1Entrance"] write: "extmonwinentrance" }, {type: constant value: false } ] },
+      {type: inVolume pars: ["PSEnclosureWindow1Exit"] write: "extmonwinexit" }
+   ]
+}
+#----------------------------------------------------------------
+END_PROLOG
+
+#================================================================
+# Give this job a name.
+process_name :  extmonwin
+
+source : {
+   module_type : EmptyEvent
+   maxEvents : @nil
+}
+
+services : @local::Services.SimAndReco
+
+physics : {
+   analyzers: {
+      genCountLogger: {
+         module_type: GenEventCountReader
+      }
+   }
+
+   producers: {
+
+      generate: @local::PrimaryProtonGun
+
+      genCounter: {
+         module_type: GenEventCounter
+      }
+
+      g4run: @local::g4run
+
+      compressPVTGTStops: {
+         module_type: CompressPhysicalVolumes
+         volumesInput : "g4run"
+         hitInputs : []
+         particleInputs : [ "tgtStopFilter" ]
+      }
+
+   }
+
+   filters: {
+      winfilter: {
+         module_type: StepPointFilter
+         stepsTag: "g4run:extmonwinentrance"
+      }
+
+      g4consistent: {
+         module_type: FilterStatusG4
+         input: "g4run"
+         maxAcceptedStatus: 9  #  status 10 and above means StepPointMCCollection may have non-dereferencable pointers
+      }
+   }
+
+   tgtFilter :  [generate, genCounter, g4run, g4consistent, winfilter]
+   trigger_paths  : [tgtFilter]
+
+   out : [winOutput]
+   gcl: [genCountLogger]
+   end_paths: [out, gcl]
+}
+
+outputs: {
+   fullOutput : {
+      module_type : RootOutput
+      fileName    : "sim.owner.extmonwin-full_orig.version.sequencer.art"
+   }
+
+   winOutput : {
+      module_type : RootOutput
+      SelectEvents: [tgtFilter]
+      outputCommands:   [ "drop *_*_*_*",
+         "keep mu2e::GenParticles_*_*_*",
+         "keep mu2e::GenEventCount_*_*_*",
+         "keep mu2e::StatusG4_*_*_*",
+         "keep mu2e::StepPointMCs_*_*_*",
+         "keep mu2e::SimParticlemv_*_*_*"
+      ]
+      fileName    : "sim.owner.extmonwin_orig.version.sequencer.art"
+   }
+}
+
+#================================================================
+# Mu2eG4 cuts are evaluated in the listed order.
+# The first match wins.  For the "intersection"
+# type, the first false stops the evaluation.
+# For the "union" type the first true stops the evaluation.
+physics.producers.g4run.Mu2eG4StackingOnlyCut: {
+   type: pdgId pars: [ 12, -12, 14, -14, 16, -16, // neutrinos
+      22, 11, -11 ] // also gamma and e+-
+}
+physics.producers.g4run.Mu2eG4CommonCut: {
+   type: union
+   pars: [
+      @local::killLowEnergyStuff,
+      @local::killInSideVolumes,
+      @local::extmonwinwriter
+   ]
+}
+
+physics.producers.g4run.SDConfig.enableSD: [  ] # activate just the explicitly listed SDs
+
+# Coarser cuts per e-mail discussion with Krzysztof Genser on 2022-02-18
+physics.producers.g4run.physics.minRangeCut : 1. # mm
+physics.producers.g4run.physics.protonProductionCut : 1. # mm
+physics.producers.g4run.physics.turnOffRadioactiveDecay : true
+
+services.GeometryService.inputFile : "Offline/Mu2eG4/geom/geom_common_current.txt"
+services.TFileService.fileName : "nts.owner.extmonwin_orig.version.sequencer.root"
+
+# Initialze seeding of random engines: do not put these lines in base .fcl files for grid jobs.
+services.SeedService.baseSeed         :  8
+services.SeedService.maxUniqueEngines :  20
