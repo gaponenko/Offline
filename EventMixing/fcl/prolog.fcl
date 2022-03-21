@@ -1,9 +1,0 @@
-# -*- mode: tcl -*-
-#------------------------------------------------------------------------------
-# this file is included by fcl/standardProducers.fcl inside the PROLOG section
-#------------------------------------------------------------------------------
-BEGIN_PROLOG
-
-# the current mixing definitions are under JobConfig
-
-END_PROLOG

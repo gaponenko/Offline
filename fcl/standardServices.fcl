@@ -3,8 +3,6 @@
 #
 
 #include "Offline/fcl/minimalMessageService.fcl"
-#include "Offline/DbService/fcl/prolog.fcl"
-#include "Offline/ProditionsService/fcl/prolog.fcl"
 
 BEGIN_PROLOG
 
@@ -43,8 +41,6 @@ Services : {
     }
     ConditionsService	    : { conditionsfile : "Offline/ConditionsService/data/conditions_01.txt"      }
     GlobalConstantsService  : { inputFile      : "Offline/GlobalConstantsService/data/globalConstants_01.txt" }
-    DbService : @local::DbEmpty
-    ProditionsService: @local::Proditions
   }
 
   SimOnly   : {

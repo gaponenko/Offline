@@ -2,25 +2,10 @@
 #
 # this file is deprecated: please include the individual producers you need from the appropriate specific prologs below
 #
-#include "Offline/fcl/TrkCaloDt.fcl"
 #include "Offline/EventGenerator/fcl/prolog.fcl"
 #include "Offline/Filters/fcl/prolog.fcl"
-#include "Offline/Compression/fcl/prolog.fcl"
 #include "Offline/Mu2eG4/fcl/prolog.fcl"
-#include "Offline/TrackerMC/fcl/prolog.fcl"
-#include "Offline/CaloCluster/fcl/prolog.fcl"
 #include "Offline/ExtinctionMonitorFNAL/fcl/prolog.fcl"
-#include "Offline/TrkHitReco/fcl/prolog.fcl"
-#include "Offline/TrkReco/fcl/prolog.fcl"
-#include "Offline/TrkPatRec/fcl/prolog.fcl"
-#include "Offline/CalPatRec/fcl/prolog.fcl"
-#include "Offline/CalPatRec/fcl/prolog_common.fcl"
-#include "Offline/TrackCaloMatching/fcl/prolog.fcl"
-#include "Offline/ParticleID/fcl/prolog.fcl"
-#include "Offline/EventMixing/fcl/prolog.fcl"
-#include "Offline/CaloMC/fcl/prolog.fcl"
-#include "Offline/CaloReco/fcl/prolog.fcl"
-#include "Offline/CRVResponse/fcl/prolog.fcl"
 #include "Offline/CommonMC/fcl/prolog.fcl"
 
 BEGIN_PROLOG

@@ -40,12 +40,10 @@
 #include "Offline/RecoDataProducts/inc/BkgQual.hh"
 
 // tracking output
-#include "Offline/RecoDataProducts/inc/KKLine.hh"
 
 #include "Offline/RecoDataProducts/inc/TrkFitFlag.hh"
 #include "Offline/RecoDataProducts/inc/TrkExtTraj.hh"
 #include "Offline/RecoDataProducts/inc/KalRepPtrCollection.hh"
-#include "Offline/RecoDataProducts/inc/KKLoopHelix.hh"
 #include "Offline/RecoDataProducts/inc/TrackSummaryRecoMap.hh"
 #include "Offline/RecoDataProducts/inc/TrackSummary.hh"
 #include "Offline/RecoDataProducts/inc/TrackCaloAssns.hh" 
