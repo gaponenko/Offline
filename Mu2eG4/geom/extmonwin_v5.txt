@@ -1,0 +1,10 @@
+#include "Offline/Mu2eG4/geom/geom_common.txt"
+
+// ExtMonFNAL window
+string PSEnclosure.window1.materialName = "StainlessSteel316";
+double PSEnclosure.window1.thickness = 4.0; // mm
+
+// This tells emacs to view this file in c++ mode.
+// Local Variables:
+// mode:c++
+// End:

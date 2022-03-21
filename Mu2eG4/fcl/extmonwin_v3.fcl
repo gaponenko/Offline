@@ -1,0 +1,7 @@
+# Andrei Gaponenko, 2022
+
+#include "Offline/Mu2eG4/fcl/extmonwin_orig.fcl"
+
+services.GeometryService.inputFile : "Offline/Mu2eG4/geom/extmonwin_v3.txt"
+services.TFileService.fileName : "nts.owner.extmonwin_v3.version.sequencer.root"
+outputs.winOutput.fileName: "sim.owner.extmonwin_v3.version.sequencer.art"
