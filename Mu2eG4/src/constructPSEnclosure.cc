@@ -208,7 +208,7 @@ namespace mu2e {
         std::ostringstream wname;
         wname<<"PSEnclosureWindow"<<i;
 
-        nestTubs(wname.str(),
+        const auto vol = nestTubs(wname.str(),
                  pse->windows()[i].getTubsParams(),
                  findMaterialOrThrow(pse->windows()[i].materialName()),
                  0,
@@ -223,6 +223,10 @@ namespace mu2e {
                  doSurfaceCheck
                  );
 
+
+        std::cout<<"AG: constructPSEnclosure(A): "<<vol.name
+                 <<", centerInMu2e() = "<<vol.centerInMu2e()
+                 <<std::endl;
 
         verbosityLevel
           && std::cout << __func__ << " " << wname.str() << " center in Mu2e: "
@@ -298,7 +302,7 @@ namespace mu2e {
           windowOrigin -= CLHEP::Hep3Vector(0., 0., (2.*pse->wFramesIn()[iwindow].getTubsParams().zHalfLength()
                                                      + pse->windows()[iwindow].getTubsParams().zHalfLength()));
         }
-        nestTubs(windowname.str(),
+        const auto vol = nestTubs(windowname.str(),
                  pse->windows()[iwindow].getTubsParams(),
                  findMaterialOrThrow(pse->windows()[iwindow].materialName()),
                  nullptr,
@@ -312,6 +316,10 @@ namespace mu2e {
                  placePV,
                  doSurfaceCheck
                  );
+
+        std::cout<<"AG: constructPSEnclosure(B): "<<vol.name
+                 <<", centerInMu2e() = "<<vol.centerInMu2e()
+                 <<std::endl;
 
       // The window FRAME if version 3+
       if ( pse->version() >  2 && pse->hasWindowFrames()[iwindow] ) {
