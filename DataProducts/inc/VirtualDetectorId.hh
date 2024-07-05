@@ -87,6 +87,7 @@ namespace mu2e {
       PTM_1_In, PTM_2_In, // 112, 113, upstream faces of the production target monitor wire chambers between the PS and the proton beam stop
       STM_Final, // 114
       STM_UpStrHole, //115
+      PSE_zplane1, PSE_zplane2, // AG: for andr-psEnclosure-study
       lastEnum
     };
 
@@ -137,7 +138,8 @@ namespace mu2e {
       "Coll1_pBarCollar_In", "Coll1_pBarCollar_Out", \
       "PTM_1_In", "PTM_2_In", \
       "STM_Final", \
-      "STM_UpStrHole"
+      "STM_UpStrHole" \
+      , "PSE_zplane1" , "PSE_zplane2"
 
   public:
 
