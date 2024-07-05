@@ -319,6 +319,8 @@ namespace mu2e {
 
         std::cout<<"AG: constructPSEnclosure(B): "<<vol.name
                  <<", centerInMu2e() = "<<vol.centerInMu2e()
+                 <<", halfThickness = "<<pse->windows()[iwindow].getTubsParams().zHalfLength()
+                 <<", R = "<<pse->windows()[iwindow].getTubsParams().outerRadius()
                  <<std::endl;
 
       // The window FRAME if version 3+
