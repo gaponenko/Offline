@@ -425,7 +425,7 @@ namespace mu2e {
                0, // rotation
                CLHEP::Hep3Vector(0,0, *zPlanes.rbegin() - vdg->getHalfLength()), // position in parent
                channel, // parent
-               0,
+               vd_entrance,
                geomOptions->isVisible(VirtualDetector::volumeName(vd_entrance)),
                G4Colour::Magenta(),
                geomOptions->isSolid(VirtualDetector::volumeName(vd_entrance)),
@@ -446,7 +446,7 @@ namespace mu2e {
                0, // rotation
                CLHEP::Hep3Vector(0,0, *zPlanes.begin() + vdg->getHalfLength()), // position in parent
                channel, // parent
-               0,
+               vd_exit,
                geomOptions->isVisible(VirtualDetector::volumeName(vd_exit)),
                G4Colour::Magenta(),
                geomOptions->isSolid(VirtualDetector::volumeName(vd_exit)),

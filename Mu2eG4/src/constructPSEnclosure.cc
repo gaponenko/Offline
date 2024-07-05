@@ -62,7 +62,7 @@ namespace mu2e {
                  0, // rotation
                  posInParent,
                  parent,
-                 0,
+                 vdId,
                  G4Colour::Magenta()
                  );
       }
