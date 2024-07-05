@@ -302,6 +302,10 @@ namespace mu2e {
         vd->addVirtualDetector(VirtualDetectorId::EMFC1Exit, vzero, 0, vzero);
         vd->addVirtualDetector(VirtualDetectorId::EMFC2Entrance, vzero, 0, vzero);
         vd->addVirtualDetector(VirtualDetectorId::EMFC2Exit, vzero, 0, vzero);
+
+        // hack for andr-psEnclosure-study
+        vd->addVirtualDetector(VirtualDetectorId::PSE_zplane1, vzero, 0, vzero);
+        vd->addVirtualDetector(VirtualDetectorId::PSE_zplane2, vzero, 0, vzero);
       }
 
       // This VD is related to PS

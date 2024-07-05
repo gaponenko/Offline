@@ -57,6 +57,9 @@ namespace mu2e {
 
   void constructServicesGeom(const VolumeInfo& parent, const SimpleConfig& config) {
 
+    // AG: andr-psEnclosure-study hack
+    return;
+
     GeomHandle<Pipe>   pipeSet;
     GeomHandle<ElectronicRack>   rackSet;
 

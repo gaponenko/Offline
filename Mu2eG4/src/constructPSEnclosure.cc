@@ -34,11 +34,53 @@
 #include "Geant4/G4SubtractionSolid.hh"
 #include "Geant4/G4UnionSolid.hh"
 
+#include "Offline/GeometryService/inc/VirtualDetector.hh"
+#include "Offline/DataProducts/inc/VirtualDetectorId.hh"
+
 namespace mu2e {
 
   //================================================================
+  namespace {
+    void add_zplane_vd(VirtualDetectorId::enum_type vdId,
+                       double z,
+                       const VolumeInfo& parent,
+                       const SimpleConfig& config)
+    {
+      const auto geomOptions = art::ServiceHandle<GeometryService>()->geomOptions();
+      geomOptions->loadEntry( config, "vd", "vd");
+
+      GeomHandle<VirtualDetector> vdg;
+      if( vdg->exist(vdId) ) {
+        TubsParams vdpars(0., 1500*CLHEP::mm, vdg->getHalfLength());
+
+        const CLHEP::Hep3Vector posInMu2e(3904., 0., z);
+        const CLHEP::Hep3Vector posInParent = posInMu2e - parent.centerInMu2e();
+
+        nestTubs(VirtualDetector::volumeName(vdId),
+                 vdpars,
+                 findMaterialOrThrow("G4_AIR"),
+                 0, // rotation
+                 posInParent,
+                 parent,
+                 vdId,
+                 G4Colour::Magenta()
+                 );
+      }
+    }
+  }
+  //================================================================
 
   void constructPSEnclosure(const VolumeInfo& parent, const SimpleConfig& config) {
+    const double z_offline = -9221.16; // the flange face position, not window center
+    const double z_drawing = -9296.4; //
+
+    // AG: andr-psEnclosure-study hack
+    add_zplane_vd(VirtualDetectorId::PSE_zplane1, z_offline, parent, config);
+    add_zplane_vd(VirtualDetectorId::PSE_zplane2, z_drawing, parent, config);
+
+    return;
+
+    //################################################################
 
     GeomHandle<PSEnclosure> pse;
     GeomHandle<PSVacuum> psv;
