@@ -178,28 +178,29 @@ namespace mu2e {
     //Beam Dump Back
 
     CLHEP::Hep3Vector coreAirPositionInShield( shieldingRot * (dump->coreAirCenterInMu2e() - beamDumpFront.centerInMu2e()));
-    VolumeInfo beamDumpBack("ProtonBeamDumpBack",
-                            CLHEP::Hep3Vector(0, dump->backShieldingCenterInMu2e()[1], 0)
-                            - parent.centerInMu2e(),
-                            parent.centerInWorld);
 
-    beamDumpBack.solid = new G4ExtrudedSolid(beamDumpBack.name, dump->backShieldingOutline(),
-                                             dump->backShieldingHalfSize()[1],
-                                             G4TwoVector(0,0), 1., G4TwoVector(0,0), 1.);
-
-    finishNesting(beamDumpBack,
-                  materialFinder.get("protonBeamDump.material.shielding"),
-                  pshieldingRot,
-                  beamDumpBack.centerInParent,
-                  parent.logical,
-                  0,
-                  geomOptions->isVisible( "ProtonBeamDumpBack" ),
-                  G4Colour::Red() ,
-                  geomOptions->isSolid( "ProtonBeamDumpBack" ),
-                  geomOptions->forceAuxEdgeVisible( "ProtonBeamDumpBack" ),
-                  geomOptions->placePV( "ProtonBeamDumpBack" ),
-                  geomOptions->doSurfaceCheck( "ProtonBeamDumpBack" )
-                  );
+//AG: extmon-absolute-geometry-hacks:    VolumeInfo beamDumpBack("ProtonBeamDumpBack",
+//AG: extmon-absolute-geometry-hacks:                            CLHEP::Hep3Vector(0, dump->backShieldingCenterInMu2e()[1], 0)
+//AG: extmon-absolute-geometry-hacks:                            - parent.centerInMu2e(),
+//AG: extmon-absolute-geometry-hacks:                            parent.centerInWorld);
+//AG: extmon-absolute-geometry-hacks:
+//AG: extmon-absolute-geometry-hacks:    beamDumpBack.solid = new G4ExtrudedSolid(beamDumpBack.name, dump->backShieldingOutline(),
+//AG: extmon-absolute-geometry-hacks:                                             dump->backShieldingHalfSize()[1],
+//AG: extmon-absolute-geometry-hacks:                                             G4TwoVector(0,0), 1., G4TwoVector(0,0), 1.);
+//AG: extmon-absolute-geometry-hacks:
+//AG: extmon-absolute-geometry-hacks:    finishNesting(beamDumpBack,
+//AG: extmon-absolute-geometry-hacks:                  materialFinder.get("protonBeamDump.material.shielding"),
+//AG: extmon-absolute-geometry-hacks:                  pshieldingRot,
+//AG: extmon-absolute-geometry-hacks:                  beamDumpBack.centerInParent,
+//AG: extmon-absolute-geometry-hacks:                  parent.logical,
+//AG: extmon-absolute-geometry-hacks:                  0,
+//AG: extmon-absolute-geometry-hacks:                  geomOptions->isVisible( "ProtonBeamDumpBack" ),
+//AG: extmon-absolute-geometry-hacks:                  G4Colour::Red() ,
+//AG: extmon-absolute-geometry-hacks:                  geomOptions->isSolid( "ProtonBeamDumpBack" ),
+//AG: extmon-absolute-geometry-hacks:                  geomOptions->forceAuxEdgeVisible( "ProtonBeamDumpBack" ),
+//AG: extmon-absolute-geometry-hacks:                  geomOptions->placePV( "ProtonBeamDumpBack" ),
+//AG: extmon-absolute-geometry-hacks:                  geomOptions->doSurfaceCheck( "ProtonBeamDumpBack" )
+//AG: extmon-absolute-geometry-hacks:                  );
 
     VolumeInfo  beamDumpCoreAir = nestBox("ProtonBeamDumpCoreAir",
                                           dump->coreAirHalfSize(),
@@ -220,25 +221,26 @@ namespace mu2e {
             G4Colour::Blue()
             );
 
-    CLHEP::Hep3Vector frontSteelPositionInShield( shieldingRot * (dump->frontSteelCenterInMu2e() - beamDumpFront.centerInMu2e()));
-    nestBox("ProtonBeamDumpFrontSteel",
-            dump->frontSteelHalfSize(),
-            materialFinder.get("protonBeamDump.material.core"),
-            &rotationInShield,
-            frontSteelPositionInShield,
-            beamDumpFront, 0,
-            G4Colour::Blue()
-            );
 
-    CLHEP::Hep3Vector backSteelPositionInShield( shieldingRot * (dump->backSteelCenterInMu2e() - beamDumpBack.centerInMu2e()));
-    nestBox("ProtonBeamDumpBackSteel",
-            dump->backSteelHalfSize(),
-            materialFinder.get("protonBeamDump.material.core"),
-            &rotationInShield,
-            backSteelPositionInShield,
-            beamDumpBack, 0,
-            G4Colour::Blue()
-            );
+//AG: extmon-absolute-geometry-hacks:    CLHEP::Hep3Vector frontSteelPositionInShield( shieldingRot * (dump->frontSteelCenterInMu2e() - beamDumpFront.centerInMu2e()));
+//AG: extmon-absolute-geometry-hacks:    nestBox("ProtonBeamDumpFrontSteel",
+//AG: extmon-absolute-geometry-hacks:            dump->frontSteelHalfSize(),
+//AG: extmon-absolute-geometry-hacks:            materialFinder.get("protonBeamDump.material.core"),
+//AG: extmon-absolute-geometry-hacks:            &rotationInShield,
+//AG: extmon-absolute-geometry-hacks:            frontSteelPositionInShield,
+//AG: extmon-absolute-geometry-hacks:            beamDumpFront, 0,
+//AG: extmon-absolute-geometry-hacks:            G4Colour::Blue()
+//AG: extmon-absolute-geometry-hacks:            );
+//AG: extmon-absolute-geometry-hacks:
+//AG: extmon-absolute-geometry-hacks:    CLHEP::Hep3Vector backSteelPositionInShield( shieldingRot * (dump->backSteelCenterInMu2e() - beamDumpBack.centerInMu2e()));
+//AG: extmon-absolute-geometry-hacks:    nestBox("ProtonBeamDumpBackSteel",
+//AG: extmon-absolute-geometry-hacks:            dump->backSteelHalfSize(),
+//AG: extmon-absolute-geometry-hacks:            materialFinder.get("protonBeamDump.material.core"),
+//AG: extmon-absolute-geometry-hacks:            &rotationInShield,
+//AG: extmon-absolute-geometry-hacks:            backSteelPositionInShield,
+//AG: extmon-absolute-geometry-hacks:            beamDumpBack, 0,
+//AG: extmon-absolute-geometry-hacks:            G4Colour::Blue()
+//AG: extmon-absolute-geometry-hacks:            );
 
     constructExtMonFNAL(beamDumpFront, shieldingRot, parent, CLHEP::HepRotation::IDENTITY, config);
 
