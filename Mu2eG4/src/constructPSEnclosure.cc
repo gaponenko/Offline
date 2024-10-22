@@ -73,10 +73,12 @@ namespace mu2e {
   void constructPSEnclosure(const VolumeInfo& parent, const SimpleConfig& config) {
     const double z_offline = -9221.16; // the flange face position, not window center
     const double z_drawing = -9296.4; //
+    const double z_mainwin_drawing =  -9398.0; // e-mail from Matt Slabaugh 2024-05-16
 
     // AG: andr-psEnclosure-study hack
     add_zplane_vd(VirtualDetectorId::PSE_zplane1, z_offline, parent, config);
     add_zplane_vd(VirtualDetectorId::PSE_zplane2, z_drawing, parent, config);
+    add_zplane_vd(VirtualDetectorId::PSE_zplane3, z_mainwin_drawing, parent, config);
 
     return;
 

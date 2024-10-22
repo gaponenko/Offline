@@ -306,6 +306,7 @@ namespace mu2e {
         // hack for andr-psEnclosure-study
         vd->addVirtualDetector(VirtualDetectorId::PSE_zplane1, vzero, 0, vzero);
         vd->addVirtualDetector(VirtualDetectorId::PSE_zplane2, vzero, 0, vzero);
+        vd->addVirtualDetector(VirtualDetectorId::PSE_zplane3, vzero, 0, vzero);
       }
 
       // This VD is related to PS
